@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Http\Requests\Api\Admin\Users\UserStoreRequest;
+use App\Http\Requests\Api\Admin\Users\UserUpdateRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
+
+class ModelRequestFactory
+{
+    public static function validate(string $model, string $action, Request $request): void
+    {
+        $map = [
+            'user' => [
+                'store' => UserStoreRequest::class,
+                'update' => UserUpdateRequest::class,
+            ],
+
+        ];
+
+        $model = strtolower($model);
+
+        if (!isset($map[$model][$action])) {
+           
+            return; 
+        }
+
+       
+        $requestClass = app($map[$model][$action]);
+    
+        $validator = Validator::make($request->all(), $requestClass->rules());
+    
+        if ($validator->fails()) {
+            
+            throw new ValidationException($validator);
+        }
+        
+    }
+}

@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Api\Admin\LangStoreRequest;
+use App\Http\Requests\Api\Admin\Slider\SliderStoreRequest;
+use App\Http\Requests\Api\Admin\Slider\SliderUpdateRequest;
 use App\Http\Requests\Api\Admin\Users\UserStoreRequest;
 use App\Http\Requests\Api\Admin\Users\UserUpdateRequest;
 use Illuminate\Http\Request;
@@ -18,6 +21,15 @@ class ModelRequestFactory
                 'store' => UserStoreRequest::class,
                 'update' => UserUpdateRequest::class,
             ],
+            'lang'=>[
+                'store' => LangStoreRequest::class,
+                'update' => LangStoreRequest::class,
+                
+            ],
+            'slider'=>[
+                'store'=> SliderStoreRequest::class,
+                'update'=> SliderUpdateRequest::class
+            ]
 
         ];
 
@@ -33,10 +45,12 @@ class ModelRequestFactory
     
         $validator = Validator::make($request->all(), $requestClass->rules());
     
-        if ($validator->fails()) {
+        // if ($validator->fails()) {
             
-            throw new ValidationException($validator);
-        }
+        //     throw new ValidationException($validator);
+        // }
+
+        
         
     }
 }

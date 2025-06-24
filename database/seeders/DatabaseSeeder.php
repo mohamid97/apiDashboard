@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Api\Admin\Lang;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -29,9 +30,12 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        Lang::firstOrCreate(['code' => 'ar'], ['lang' => 'Arabic']);
+
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $adminRole = Role::firstOrCreate(['name' => 'manager']);
        
-        $models = ['user' , 'role' ,'post', 'service'];
+        $models = ['user' , 'role' ,'post', 'service' , 'lang' , 'slider'];
         $actions = ['view', 'create', 'update', 'delete'];
         foreach ($models as $model) {
             foreach ($actions as $action) {
@@ -41,7 +45,7 @@ class DatabaseSeeder extends Seeder
         }
 
          $adminUser->assignRole($adminRole);
-
+ 
        
 
 

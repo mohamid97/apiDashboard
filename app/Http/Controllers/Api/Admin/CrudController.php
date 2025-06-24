@@ -8,21 +8,50 @@ use App\Http\Requests\ModelRequestFactory;
 use App\Services\ModelServiceFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
-
-
-class GenericModelController extends Controller
+class CrudController extends Controller
 {
     use \App\Traits\ResponseTrait;
+    
+    protected $data;
 
+    protected function getResourceClass(string $modelName)
+    {
 
+        $studlyName = Str::studly($modelName);
+        $resourceClass =  "App\\Http\\Resources\\Api\\Admin\\{$studlyName}Resource";
+        if (class_exists($resourceClass)) {
+              return $this->success( new $resourceClass($this->data),__('main.stored_successfully', ['model' => $modelName]));
+        }
+        return $this->success( $this->data, __('main.stored_successfully', ['model' => $modelName]) );
+
+        
+    }
+
+  
     public function store(Request $request)
     {
+        
         ModelRequestFactory::validate($request->model, 'store', $request);
-        $service = ModelServiceFactory::make($request->model);
-        $data = $service->store($request->except('model'));
-        return response()->json(['data' => $data]);
+        try{
+            $service = ModelServiceFactory::make($request->model);
+            DB::beginTransaction();
+            $this->data = $service->store($request->except('model'));
+            DB::commit();
+            return  $this->getResourceClass($request->model);
+        }catch(\Exception $e){
+            DB::rollBack();
+            return $this->error($e->getMessage() , 500);
+        }
+
+        
+
     }
+
+
+
 
 
         public function update(Request $request)

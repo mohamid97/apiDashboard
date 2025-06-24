@@ -10,6 +10,8 @@ abstract class BaseModelService
 {
     protected string $modelClass;
 
+
+
     // protected function authorizeAction(string $action)
     // {
     //     $model = strtolower(class_basename($this->modelClass));

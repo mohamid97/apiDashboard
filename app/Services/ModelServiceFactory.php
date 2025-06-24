@@ -7,6 +7,8 @@ class ModelServiceFactory
 {
     protected static array $map = [
         'user' => \App\Services\User\UserService::class,
+        'lang' => \App\Services\Lang\LangService::class,
+        'slider'=>\App\Services\Slider\SliderService::class,
     ];
 
     public static function make(string $modelName)

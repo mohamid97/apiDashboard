@@ -17,17 +17,43 @@ class CrudController extends Controller
     
     protected $data;
 
-    protected function getResourceClass(string $modelName)
+    protected function getResourceClass(string $modelName  , $msg = 'main.stored_successfully')
     {
 
+      
         $studlyName = Str::studly($modelName);
         $resourceClass =  "App\\Http\\Resources\\Api\\Admin\\{$studlyName}Resource";
         if (class_exists($resourceClass)) {
-              return $this->success( new $resourceClass($this->data),__('main.stored_successfully', ['model' => $modelName]));
+           
+              return $this->success( is_array($this->data) || $this->data instanceof \Illuminate\Support\Collection ? $resourceClass::collection($this->data) : new $resourceClass($this->data), __($msg, ['model' => $modelName]));
         }
-        return $this->success( $this->data, __('main.stored_successfully', ['model' => $modelName]) );
+        return $this->success( $this->data, __($msg, ['model' => $modelName]));
 
         
+    }
+
+    public function all(Request $request)
+    {
+        
+        try {
+            $service = ModelServiceFactory::make($request->model);
+            $this->data = $service->all($request->all());
+            return $this->getResourceClass($request->model, 'main.list_successfully');
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), 500);
+        }
+    }
+
+    public function view(Request $request)
+    {
+        
+        try {
+            $service = ModelServiceFactory::make($request->model);
+            $this->data = $service->view($request->id);
+            return $this->getResourceClass($request->model , 'main.model_details');
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), 500);
+        }
     }
 
   
@@ -52,21 +78,41 @@ class CrudController extends Controller
 
 
 
-
-
-        public function update(Request $request)
+    public function update(Request $request)
     {
         ModelRequestFactory::validate($request->model, 'update', $request);
-        $service = ModelServiceFactory::make($request->model);
-        $data = $service->update($request->id, $request->except(['model', 'id']));
-        return response()->json(['data' => $data]);
+        try{
+            $service = ModelServiceFactory::make($request->model);
+            DB::beginTransaction();
+            $this->data  = $service->update($request->id, $request->except(['model', 'id']));
+            DB::commit();
+          
+            return  $this->getResourceClass($request->model);
+        }catch(\Exception $e){
+            DB::rollBack();
+            return $this->error($e->getMessage() , 500);
+        }
+
+
     }
 
     public function delete(Request $request)
     {
-        $service = ModelServiceFactory::make($request->model);
-        $service->delete($request->id);
-        return response()->json(['message' => 'Deleted successfully']);
+        if(!$request->id){
+            return $this->error(__('main.no_id_exist') , 404);
+        }
+        try{
+            DB::beginTransaction();
+            $service = ModelServiceFactory::make($request->model);
+            $service->delete($request->id);
+            DB::commit();
+            return $this->success(null , __('main.deleted_successfully'));
+        }catch(\Exception $e){
+             DB::rollBack();
+            return $this->error($e->getMessage() , 500);
+        }
+
+
     }
 
     public function handleAction(Request $request)

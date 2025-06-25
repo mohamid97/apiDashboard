@@ -18,13 +18,15 @@ trait StoreMultiLang{
                 if (isset($data[$attribute][$lang->code])) {
                     $model->{$attribute.':'.$lang->code} = $data[$attribute][$lang->code];
                 }else{
+                    
                     $model->{$attribute.':'.$lang->code} = null;
                 }
             }
         }
 
         $model->save();
-
+  
+       
         return $model;
     }
 

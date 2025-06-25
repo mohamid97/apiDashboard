@@ -26,6 +26,7 @@ class SliderUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'required|exists:sliders,id',
             'image'=>'nullable|image|mimes:jpeg,png,jpg,gif',
             'order'=>'nullable|integer|unique:sliders,order,except,id',
             'title.*'=>'nullable|max:255',

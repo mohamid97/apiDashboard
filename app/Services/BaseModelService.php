@@ -22,6 +22,14 @@ abstract class BaseModelService
     //     }
     // }
 
+    public function all($request){
+        return $this->modelClass::all();
+    }
+
+    public function view($id){
+        return $this->modelClass::find($id);
+    }
+
     public function store(array $data)
     {
         // $this->authorizeAction('create');

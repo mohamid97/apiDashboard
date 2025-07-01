@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Api\Admin\Category\CategoryStoreRequest;
+use App\Http\Requests\Api\Admin\Category\CategoryUpdateRequest;
 use App\Http\Requests\Api\Admin\LangStoreRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderStoreRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderUpdateRequest;
@@ -29,16 +31,20 @@ class ModelRequestFactory
             'slider'=>[
                 'store'=> SliderStoreRequest::class,
                 'update'=> SliderUpdateRequest::class
+            ],
+            'category'=>[
+                'store'=> CategoryStoreRequest::class,
+                'update'=> CategoryUpdateRequest::class
             ]
 
         ];
 
         $model = strtolower($model);
-
         if (!isset($map[$model][$action])) {
            
             return; 
         }
+      
 
        
         $requestClass = app($map[$model][$action]);

@@ -10,6 +10,7 @@ class SliderService extends BaseModelService
 {
     use StoreMultiLang , HandlesImage;
     protected string $modelClass = Slider::class;
+    
    
 
         // get basic column that has no translation 

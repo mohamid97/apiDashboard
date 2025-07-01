@@ -22,10 +22,26 @@ class CrudController extends Controller
 
       
         $studlyName = Str::studly($modelName);
+        
         $resourceClass =  "App\\Http\\Resources\\Api\\Admin\\{$studlyName}Resource";
+
         if (class_exists($resourceClass)) {
-           
-              return $this->success( is_array($this->data) || $this->data instanceof \Illuminate\Support\Collection ? $resourceClass::collection($this->data) : new $resourceClass($this->data), __($msg, ['model' => $modelName]));
+            if($this->data instanceof \Illuminate\Pagination\AbstractPaginator){
+                return $this->success(
+                    [
+                    'items'=>$resourceClass::collection($this->data) ,
+                    'pagination'=>[      
+                        'current_page' => $this->data->currentPage(),
+                        'last_page' => $this->data->lastPage(),
+                        'per_page' => $this->data->perPage(),
+                        'total' => $this->data->total(),
+                        ]
+                    ],
+                    __($msg, ['model' => $modelName])
+                );
+             }
+    
+              return $this->success( is_array($this->data)|| $this->data instanceof \Illuminate\Support\Collection  ? $resourceClass::collection($this->data) : new $resourceClass($this->data), __($msg, ['model' => $modelName]));
         }
         return $this->success( $this->data, __($msg, ['model' => $modelName]));
 
@@ -59,8 +75,10 @@ class CrudController extends Controller
   
     public function store(Request $request)
     {
-        
+
+       
         ModelRequestFactory::validate($request->model, 'store', $request);
+      
         try{
             $service = ModelServiceFactory::make($request->model);
             DB::beginTransaction();

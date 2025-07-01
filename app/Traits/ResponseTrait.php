@@ -31,6 +31,7 @@ trait ResponseTrait
             'success' => false,
             'message' => $message,
             'code'=>$code
-        ]);
+        ],$code);
+        
     }
 }

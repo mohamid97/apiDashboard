@@ -9,6 +9,7 @@ class ModelServiceFactory
         'user' => \App\Services\User\UserService::class,
         'lang' => \App\Services\Lang\LangService::class,
         'slider'=>\App\Services\Slider\SliderService::class,
+        'category'=>\App\Services\Category\CategoryService::class
     ];
 
     public static function make(string $modelName)

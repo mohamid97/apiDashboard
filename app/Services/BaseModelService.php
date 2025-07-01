@@ -23,7 +23,13 @@ abstract class BaseModelService
     // }
 
     public function all($request){
-        return $this->modelClass::all();
+
+       $query = $this->modelClass::query();
+        if (!empty($request['search']) && method_exists($this, 'applySearch')) {
+            $query = $this->applySearch($query, $request['search']);
+        }
+        return isset($request['paginate']) ? $query->paginate($request['paginate']) : $query->get();
+
     }
 
     public function view($id){

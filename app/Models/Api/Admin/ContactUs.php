@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-class Category extends Model implements TranslatableContract
+class ContactUs extends Model implements TranslatableContract
 {
     use HasFactory , Translatable;
-    protected $fillable = ['image' , 'thumbnail' , 'order' , 'parent_id'];
-    public $translatedAttributes = ['title' , 'alt_image' , 'title_image' ,'small_des' , 'des' , 'meta_title' , 'meta_des' , 'slug'];
-    public $translationForeignKey = 'category_id';
-    public $translationModel = 'App\Models\Api\Admin\CategoryTranslation';
+    protected $fillable = ['image'];
+    public $translatedAttributes = ['title' , 'alt_image' , 'title_image' , 'des' , 'meta_title' , 'meta_des'];
+    public $translationForeignKey = 'contatcus_id';
+    public $translationModel = 'App\Models\Api\Admin\ContactUsTranslation';
 
     
     protected function serializeDate(\DateTimeInterface $date)
     {
       return $date->format('Y-m-d'); 
+      
     }
+    
     
 }

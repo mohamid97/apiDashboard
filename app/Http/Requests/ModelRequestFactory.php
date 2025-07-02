@@ -2,8 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Api\Admin\About\AboutStoreRequest;
+use App\Http\Requests\Api\Admin\About\AboutUpdateRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryStoreRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryUpdateRequest;
+use App\Http\Requests\Api\Admin\Contact\ContactStoreRequest;
+use App\Http\Requests\Api\Admin\Contact\ContactUpdateRequest;
+use App\Http\Requests\Api\Admin\Location\LocationStoreRequest;
+use App\Http\Requests\Api\Admin\Location\LocationUpdateRequest;
 use App\Http\Requests\Api\Admin\LangStoreRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderStoreRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderUpdateRequest;
@@ -35,9 +41,23 @@ class ModelRequestFactory
             'category'=>[
                 'store'=> CategoryStoreRequest::class,
                 'update'=> CategoryUpdateRequest::class
+            ],
+            'about'=>[
+                'store'=>AboutStoreRequest::class,
+                'update'=>AboutUpdateRequest::class
+            ],
+            'contact'=>[
+                'store'=>  ContactStoreRequest::class,
+                'update'=> ContactUpdateRequest::class
+            ],
+            'location'=>[
+                'store'=> LocationStoreRequest::class,
+                'update'=> LocationUpdateRequest::class
             ]
 
         ];
+
+      
 
         $model = strtolower($model);
         if (!isset($map[$model][$action])) {

@@ -21,6 +21,7 @@ class CheckPermission
           
             $permission = $action . ' ' . strtolower($model);
             
+           
             if ($request->user()?->can($permission)) {
                 
                 return $next($request);

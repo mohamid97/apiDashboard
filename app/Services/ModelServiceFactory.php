@@ -12,7 +12,11 @@ class ModelServiceFactory
         'category'=>\App\Services\Category\CategoryService::class,
         'about'=>\App\Services\About\AboutService::class,
         'contact'=>\App\Services\Contact\ContactService::class,
-        'location'=>\App\Services\Location\LocationService::class
+        'location'=>\App\Services\Location\LocationService::class,
+        'maincontact'=>\App\Services\Maincontact\MaincontactService::class,
+        'social'=>\App\Services\Social\SocialService::class,
+        'permission'=>\App\Services\Permission\PermissionService::class,
+        'role'=>\App\Services\Role\RoleService::class,
     ];
 
     public static function make(string $modelName)

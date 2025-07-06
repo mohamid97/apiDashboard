@@ -32,14 +32,14 @@ class DatabaseSeeder extends Seeder
 
         Lang::firstOrCreate(['code' => 'ar'], ['lang' => 'Arabic']);
 
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $adminRole = Role::firstOrCreate(['name' => 'manager']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin' , 'guard_name' => 'sanctum']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager']);
        
-        $models = ['user' , 'role' ,'post', 'service' , 'lang' , 'slider' , 'category' , 'about' , 'contact' , 'location'];
+        $models = ['user' , 'role','permission' ,'post', 'service' , 'lang' , 'slider' , 'category' , 'about' , 'contact' , 'location' , 'maincontact' , 'social'];
         $actions = ['view', 'create', 'update', 'delete'];
         foreach ($models as $model) {
             foreach ($actions as $action) {
-               $permission = Permission::firstOrCreate(['name' => "{$action} {$model}"]);
+               $permission = Permission::firstOrCreate(['name' => "{$action} {$model}" , 'guard_name' => 'sanctum']);
                $adminRole->givePermissionTo($permission);             
             }
         }

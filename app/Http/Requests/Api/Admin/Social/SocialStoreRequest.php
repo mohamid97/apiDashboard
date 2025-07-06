@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\Location;
+namespace App\Http\Requests\Api\Admin\Social;
 
 use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LocationUpdateRequest extends FormRequest
+class SocialStoreRequest extends FormRequest
 {
     use ResponseTrait;
     /**
@@ -25,16 +25,21 @@ class LocationUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'id'=>'required|exists:locations,id',
-            'location'=>'nullable|string|url',
-            'address'=>"required|array|min:1",
-            "address.*"=>'required|string:max:255',
-            "phones.*"=>'nullable',
-            'emails.*'=>'nullable'
-        ];
-    }
+        $rules = [];
 
+        $platforms = [
+            'facebook', 'twitter', 'instagram', 'youtube', 'linkedin',
+            'tiktok', 'pinterest', 'snapchat', 'email', 'phone'
+        ];
+
+        foreach ($platforms as $platform) {
+            $rules[$platform] = 'nullable|string|max:255';
+            $rules["{$platform}_cta"] = 'nullable|boolean';
+            $rules["{$platform}_layout"] = 'nullable|boolean';
+        }
+
+        return $rules;
+    }
 
     protected function failedValidation(Validator $validator)
     {
@@ -46,4 +51,6 @@ class LocationUpdateRequest extends FormRequest
             )
         );
     }
+
+    
 }

@@ -11,8 +11,11 @@ use App\Http\Requests\Api\Admin\Contact\ContactUpdateRequest;
 use App\Http\Requests\Api\Admin\Location\LocationStoreRequest;
 use App\Http\Requests\Api\Admin\Location\LocationUpdateRequest;
 use App\Http\Requests\Api\Admin\LangStoreRequest;
+use App\Http\Requests\Api\Admin\Role\RoleStoreRequest;
+use App\Http\Requests\Api\Admin\Role\RoleUpdateRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderStoreRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderUpdateRequest;
+use App\Http\Requests\Api\Admin\Social\SocialStoreRequest;
 use App\Http\Requests\Api\Admin\Users\UserStoreRequest;
 use App\Http\Requests\Api\Admin\Users\UserUpdateRequest;
 use Illuminate\Http\Request;
@@ -53,7 +56,14 @@ class ModelRequestFactory
             'location'=>[
                 'store'=> LocationStoreRequest::class,
                 'update'=> LocationUpdateRequest::class
-            ]
+            ],
+            'social'=>[
+                'store'=>SocialStoreRequest::class
+            ],
+            'role'=>[
+                'store'=> RoleStoreRequest::class,
+                'update'=> RoleUpdateRequest::class
+            ],
 
         ];
 

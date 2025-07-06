@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\Location;
+namespace App\Http\Requests\Api\Admin\Role;
 
 use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LocationUpdateRequest extends FormRequest
+class RoleStoreRequest extends FormRequest
 {
     use ResponseTrait;
     /**
@@ -26,17 +26,15 @@ class LocationUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'=>'required|exists:locations,id',
-            'location'=>'nullable|string|url',
-            'address'=>"required|array|min:1",
-            "address.*"=>'required|string:max:255',
-            "phones.*"=>'nullable',
-            'emails.*'=>'nullable'
+            'name' => 'required|string|unique:roles,name',
+            'permissions' => 'array',
+            'permissions.*' => 'exists:permissions,id'
         ];
+        
     }
 
 
-    protected function failedValidation(Validator $validator)
+   protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(
             $this->error(
@@ -46,4 +44,6 @@ class LocationUpdateRequest extends FormRequest
             )
         );
     }
+    
+    
 }

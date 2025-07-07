@@ -4,10 +4,14 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Api\Admin\About\AboutStoreRequest;
 use App\Http\Requests\Api\Admin\About\AboutUpdateRequest;
+use App\Http\Requests\Api\Admin\Blog\BlogStoreRequest;
+use App\Http\Requests\Api\Admin\Blog\BlogUpdateRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryStoreRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryUpdateRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactStoreRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactUpdateRequest;
+use App\Http\Requests\Api\Admin\Event\EventStoreRequest;
+use App\Http\Requests\Api\Admin\Event\EventUpdateRequest;
 use App\Http\Requests\Api\Admin\Location\LocationStoreRequest;
 use App\Http\Requests\Api\Admin\Location\LocationUpdateRequest;
 use App\Http\Requests\Api\Admin\LangStoreRequest;
@@ -18,6 +22,7 @@ use App\Http\Requests\Api\Admin\Slider\SliderUpdateRequest;
 use App\Http\Requests\Api\Admin\Social\SocialStoreRequest;
 use App\Http\Requests\Api\Admin\Users\UserStoreRequest;
 use App\Http\Requests\Api\Admin\Users\UserUpdateRequest;
+use App\Models\Api\Admin\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -64,10 +69,18 @@ class ModelRequestFactory
                 'store'=> RoleStoreRequest::class,
                 'update'=> RoleUpdateRequest::class
             ],
+            'event'=>[
+                'store' =>EventStoreRequest::class,
+                'update' => EventUpdateRequest::class, 
+            ],
+            'blog'=>[
+                'store'=> BlogStoreRequest::class,
+                'update'=> BlogUpdateRequest::class
+            ]
 
         ];
 
-      
+         
 
         $model = strtolower($model);
         if (!isset($map[$model][$action])) {
@@ -80,7 +93,7 @@ class ModelRequestFactory
         $requestClass = app($map[$model][$action]);
     
         $validator = Validator::make($request->all(), $requestClass->rules());
-    
+        
         // if ($validator->fails()) {
             
         //     throw new ValidationException($validator);

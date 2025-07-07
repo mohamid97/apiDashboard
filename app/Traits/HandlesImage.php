@@ -22,8 +22,12 @@ trait HandlesImage{
 
 
 
-    public function deleteImage(string $path, string $disk = 'public'): bool
+    public function deleteImage(?string $path, string $disk = 'public'): bool
     {
+        if (!$path) {
+            return false;
+        }
+        
         if (Storage::disk($disk)->exists($path)) {
             return Storage::disk($disk)->delete($path);
         }
@@ -35,6 +39,7 @@ trait HandlesImage{
 
     public function getImageUrl(?string $path, string $disk = 'public'): ?string
     {
+       
         if (!$path) {
             return null;
         }

@@ -28,6 +28,11 @@ abstract class BaseModelService
         if (!empty($request['search']) && method_exists($this, 'applySearch')) {
             $query = $this->applySearch($query, $request['search']);
         }
+
+        if (!empty($request['orderBy']) && method_exists($this, 'orderBy')) {
+            $query = $this->orderBy($query, $request['orderBy']);
+        }
+
         return isset($request['paginate']) ? $query->paginate($request['paginate']) : $query->get();
 
     }

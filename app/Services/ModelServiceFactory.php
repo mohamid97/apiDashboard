@@ -17,6 +17,8 @@ class ModelServiceFactory
         'social'=>\App\Services\Social\SocialService::class,
         'permission'=>\App\Services\Permission\PermissionService::class,
         'role'=>\App\Services\Role\RoleService::class,
+        'event'=>\App\Services\Event\EventService::class,
+        'blog'=>\App\Services\Blog\BlogService::class,
     ];
 
     public static function make(string $modelName)

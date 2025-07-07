@@ -107,6 +107,7 @@ class CrudController extends Controller
           
             return  $this->getResourceClass($request->model);
         }catch(\Exception $e){
+          
             DB::rollBack();
             return $this->error($e->getMessage() , 500);
         }

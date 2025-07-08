@@ -19,6 +19,7 @@ class ModelServiceFactory
         'role'=>\App\Services\Role\RoleService::class,
         'event'=>\App\Services\Event\EventService::class,
         'blog'=>\App\Services\Blog\BlogService::class,
+        'client'=>\App\Services\Client\ClientService::class,
     ];
 
     public static function make(string $modelName)

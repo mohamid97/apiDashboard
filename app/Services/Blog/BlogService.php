@@ -85,15 +85,16 @@ class BlogService extends BaseModelService{
     }
 
 
-    public function applySearch(Builder $query, string $search){
+    public function applySearch(Builder $query, string $search ){
         return $query->where(function ($q) use ($search) {
             $q->whereTranslationLike('title', "%$search%")
               ->orWhereTranslationLike('slug', "%$search%");
         });
     }
 
-    public function orderBy(Builder $query, string $orderBy){
-        return $query->orderBy($orderBy);
+    public function orderBy(Builder $query, string $orderBy, string $direction = 'asc')
+    {
+        return $query->orderBy($orderBy, $direction);
     }
 
 

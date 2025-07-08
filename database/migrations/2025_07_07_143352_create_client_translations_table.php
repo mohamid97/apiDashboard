@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->string('locale')->index();
             $table->unique(['client_id', 'locale']);
-            $table->string('name');
+            $table->string('title');
             $table->text('des')->nullable();
             $table->string('alt_image')->nullable();
             $table->string('title_image')->nullable();

@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\Category;
-
+namespace App\Http\Requests\Api\Admin\Client;
 
 use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CategoryStoreRequest extends FormRequest
+class ClientUpdateRequest extends FormRequest
 {
     use ResponseTrait;
     /**
@@ -26,25 +25,14 @@ class CategoryStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        
-       
         return [
             'image'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
-            'thumbnail'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
             'title' => 'required|array|min:1',
             'title.*'=>'required|string|max:255',
-            'slug' => 'required|array|min:1',
-            'slug.*'=>'required|string|max:255',
             'des.*'=>'nullable|max:5000',
-            'small_des.*'=>'nullable|max:255',
             'alt_image.*' => 'nullable|max:255',
             'title_image.*' => 'nullable|max:255',
-            'meta_title.*' => 'nullable|max:255',
-            'meta_des.*' => 'nullable|max:255',
-            'order'=>'nullable|integer|unique:categories,order',
-            
         ];
-        
     }
 
     protected function failedValidation(Validator $validator)

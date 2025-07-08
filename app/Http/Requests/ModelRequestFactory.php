@@ -8,6 +8,8 @@ use App\Http\Requests\Api\Admin\Blog\BlogStoreRequest;
 use App\Http\Requests\Api\Admin\Blog\BlogUpdateRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryStoreRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryUpdateRequest;
+use App\Http\Requests\Api\Admin\Client\ClientStoreRequest;
+use App\Http\Requests\Api\Admin\Client\ClientUpdateRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactStoreRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactUpdateRequest;
 use App\Http\Requests\Api\Admin\Event\EventStoreRequest;
@@ -76,7 +78,11 @@ class ModelRequestFactory
             'blog'=>[
                 'store'=> BlogStoreRequest::class,
                 'update'=> BlogUpdateRequest::class
-            ]
+            ],
+            'client'=>[
+                'store'=>ClientStoreRequest::class,
+                'update'=>ClientUpdateRequest::class
+            ],
 
         ];
 

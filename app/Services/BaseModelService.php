@@ -30,7 +30,7 @@ abstract class BaseModelService
         }
 
         if (!empty($request['orderBy']) && method_exists($this, 'orderBy')) {
-            $query = $this->orderBy($query, $request['orderBy']);
+            $query = $this->orderBy($query, $request['orderBy'] , $request['orderDirection'] ?? 'DESC');
         }
 
         return isset($request['paginate']) ? $query->paginate($request['paginate']) : $query->get();

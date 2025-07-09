@@ -20,6 +20,9 @@ class ModelServiceFactory
         'event'=>\App\Services\Event\EventService::class,
         'blog'=>\App\Services\Blog\BlogService::class,
         'client'=>\App\Services\Client\ClientService::class,
+        'ourwork'=>\App\Services\Ourwork\OurworkService::class,
+        'feedback'=> \App\Services\Feedback\FeedbackService::class,
+        'achivement'=>\App\Services\Achivement\AchivementService::class
     ];
 
     public static function make(string $modelName)
@@ -33,6 +36,8 @@ class ModelServiceFactory
 
         return app($serviceClass);
     }
+
+    
 
 
     

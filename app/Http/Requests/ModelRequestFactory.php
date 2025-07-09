@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Api\Admin\About\AboutStoreRequest;
 use App\Http\Requests\Api\Admin\About\AboutUpdateRequest;
+use App\Http\Requests\Api\Admin\Achivement\AchivementStoreRequest;
+use App\Http\Requests\Api\Admin\Achivement\AchivementUpdateRequest;
 use App\Http\Requests\Api\Admin\Blog\BlogStoreRequest;
 use App\Http\Requests\Api\Admin\Blog\BlogUpdateRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryStoreRequest;
@@ -14,9 +16,13 @@ use App\Http\Requests\Api\Admin\Contact\ContactStoreRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactUpdateRequest;
 use App\Http\Requests\Api\Admin\Event\EventStoreRequest;
 use App\Http\Requests\Api\Admin\Event\EventUpdateRequest;
+use App\Http\Requests\Api\Admin\Feedback\FeedbackStoreRequest;
+use App\Http\Requests\Api\Admin\Feedback\FeedbackUpdateRequest;
 use App\Http\Requests\Api\Admin\Location\LocationStoreRequest;
 use App\Http\Requests\Api\Admin\Location\LocationUpdateRequest;
 use App\Http\Requests\Api\Admin\LangStoreRequest;
+use App\Http\Requests\Api\Admin\Ourwork\OurworkStoreRequest;
+use App\Http\Requests\Api\Admin\Ourwork\OurworkUpdateRequest;
 use App\Http\Requests\Api\Admin\Role\RoleStoreRequest;
 use App\Http\Requests\Api\Admin\Role\RoleUpdateRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderStoreRequest;
@@ -83,6 +89,19 @@ class ModelRequestFactory
                 'store'=>ClientStoreRequest::class,
                 'update'=>ClientUpdateRequest::class
             ],
+            'ourwork'=>[
+                'store'=> OurworkStoreRequest::class,
+                'update'=>OurworkUpdateRequest::class
+            ],
+            'feedback'=>[
+                'store'=>FeedbackStoreRequest::class,
+                'update'=>FeedbackUpdateRequest::class
+            ],
+            'achivement'=>[
+                'store'=>AchivementStoreRequest::class,
+                'update'=>AchivementUpdateRequest::class
+            ]
+            
 
         ];
 

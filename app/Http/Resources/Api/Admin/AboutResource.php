@@ -16,6 +16,7 @@ class AboutResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+
             'title'=>$this->title,
             'small_des'=>$this->small_des,
             'mission'=>$this->mission,
@@ -33,5 +34,6 @@ class AboutResource extends JsonResource
             'updated_at' =>  $this->updated_at->format('Y-m-d'),
             
         ];
+        
     }
 }

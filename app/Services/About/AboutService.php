@@ -19,6 +19,7 @@ class AboutService extends BaseModelService
             'image', 
             'breadcrumb', 
 
+
        ]));
        return $basicData;
     }
@@ -39,7 +40,7 @@ class AboutService extends BaseModelService
         }
         
         $about = AboutUs::updateOrCreate(['id' => 1] , $data);
-        $this->processTranslations($about, $data, ['title', 'des' , 'alt_image' , 'title_image'  , 'meta_title' , 'meta_des']);  
+        $this->processTranslations($about, $data, ['title','small_des','mission','vission','breif','services' ,'des' , 'alt_image' , 'title_image'  , 'meta_title' , 'meta_des']);  
         return $about;
         
     }

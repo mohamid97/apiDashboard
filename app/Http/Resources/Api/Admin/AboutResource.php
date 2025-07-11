@@ -17,6 +17,11 @@ class AboutResource extends JsonResource
     {
         return [
             'title'=>$this->title,
+            'small_des'=>$this->small_des,
+            'mission'=>$this->mission,
+            'vission'=>$this->vission,
+            'breif'=>$this->breif,
+            'services'=>$this->services,
             'des'=>$this->des,
             'image'=>$this->getImageUrl($this->image),
             'title_image'=>$this->title_image,

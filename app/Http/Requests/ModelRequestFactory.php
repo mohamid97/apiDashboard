@@ -25,6 +25,8 @@ use App\Http\Requests\Api\Admin\Ourwork\OurworkStoreRequest;
 use App\Http\Requests\Api\Admin\Ourwork\OurworkUpdateRequest;
 use App\Http\Requests\Api\Admin\Role\RoleStoreRequest;
 use App\Http\Requests\Api\Admin\Role\RoleUpdateRequest;
+use App\Http\Requests\Api\Admin\Service\ServiceStoreRequest;
+use App\Http\Requests\Api\Admin\Service\ServiceUpdateRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderStoreRequest;
 use App\Http\Requests\Api\Admin\Slider\SliderUpdateRequest;
 use App\Http\Requests\Api\Admin\Social\SocialStoreRequest;
@@ -100,6 +102,10 @@ class ModelRequestFactory
             'achivement'=>[
                 'store'=>AchivementStoreRequest::class,
                 'update'=>AchivementUpdateRequest::class
+            ],
+            'service'=>[
+                'store'=>ServiceStoreRequest::class,
+                'update'=>ServiceUpdateRequest::class
             ]
             
 

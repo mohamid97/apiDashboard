@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\About;
-
+namespace App\Http\Requests\Api\Admin\Service;
 use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AboutUpdateRequest extends FormRequest
+
+class ServiceStoreRequest extends FormRequest
 {
     use ResponseTrait;
     /**
@@ -26,21 +26,23 @@ class AboutUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
+
+            'price'=>'nullable|numeric',
+            'category_id'=>'nullable|exists:categories,id',
+            'order'=>'nullable|integer|unique:service,order',
+            'images'=>'nullable|array',
+            'images.*'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
             'breadcrumb'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
+            'service_image'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
             'title' => 'required|array|min:1',
             'title.*'=>'required|max:255',
+            'small_des' => 'nullable|max:255',
             'des.*'=>'nullable|max:5000',
-            'alt_image.*' => 'nullable|max:255',
-            'title_image.*' => 'nullable|max:255',
             'meta_title.*' => 'nullable|max:255',
             'meta_des.*' => 'nullable|max:255',
-            'small_des.*' => 'nullable|max:255',
-            'mission.*'=>'nullable|max:5000',
-            'vission.*'=>'nullable|max:5000',
-            'services.*'=>'nullable|max:5000',  
-            'breif.*'=>'nullable|max:5000',
+            
         ];
+
     }
 
 
@@ -54,4 +56,5 @@ class AboutUpdateRequest extends FormRequest
             )
         );
     }
+
 }

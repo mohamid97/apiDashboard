@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::firstOrCreate(['name' => 'admin' , 'guard_name' => 'sanctum']);
         $managerRole = Role::firstOrCreate(['name' => 'manager']);
        
-        $models = ['user' , 'role' , 'client' , 'event', 'feedback','achivement', 'ourwork','blog' ,'permission' ,'post', 'service' , 'lang' , 'slider' , 'category' , 'about' , 'contact' , 'location' , 'maincontact' , 'social'];
+        $models = ['user' ,'service' ,'role' , 'client' , 'event', 'feedback','achivement', 'ourwork','blog' ,'permission' ,'post', 'service' , 'lang' , 'slider' , 'category' , 'about' , 'contact' , 'location' , 'maincontact' , 'social'];
         $actions = ['view', 'create', 'update', 'delete'];
         foreach ($models as $model) {
             foreach ($actions as $action) {

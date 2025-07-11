@@ -44,6 +44,8 @@ class BlogUpdateRequest extends FormRequest
             'des' => 'nullable|array',
             'des.*' => 'nullable|string|max:5000',
         ];
+        
+
     }
 
 

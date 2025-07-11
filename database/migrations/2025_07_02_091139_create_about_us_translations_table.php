@@ -22,6 +22,11 @@ return new class extends Migration
             $table->text('des')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_des')->nullable();
+            $table->text('mission')->nullable();
+            $table->text('vission')->nullable();
+            $table->text('services')->nullable();
+            $table->text('brief')->nullable();
+            $table->string('small_des')->nullable();
             $table->foreign('aboutus_id')->references('id')->on('about_us')->onDelete('cascade');
             $table->timestamps();
         });

@@ -34,6 +34,11 @@ class AboutStoreRequest extends FormRequest
             'title_image.*' => 'nullable|max:255',
             'meta_title.*' => 'nullable|max:255',
             'meta_des.*' => 'nullable|max:255',
+            'small_des.*' => 'nullable|max:255',
+            'mission.*'=>'nullable|max:5000',
+            'vission.*'=>'nullable|max:5000',
+            'services.*'=>'nullable|max:5000',  
+            'breif.*'=>'nullable|max:5000',
         ];
     }
 

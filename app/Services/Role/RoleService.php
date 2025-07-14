@@ -6,27 +6,22 @@ use Spatie\Permission\Models\Role;
 class RoleService extends BaseModelService
 {
     protected string $modelClass = Role::class;
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'name'
-       ]));
-       return $basicData;
-    }
-    public function store(array $data)
+
+    public function store()
     {
 
-       $role =  parent::store($data); 
-        if (isset($data['permissions']) && is_array($data['permissions'])) {
-            $role->syncPermissions($data['permissions']);
+       $role =  parent::store($this->data); 
+        if (isset($this->data['permissions']) && is_array($this->data['permissions'])) {
+            $role->syncPermissions($this->data['permissions']);
         } 
         return $role;
     }
 
 
-    public function update($id , array $data){
-        $role = parent::update($id , $this->getBasicColumn($data));
-        if (!empty($data['permissions']) && is_array($data['permissions'])) {
-            $role->syncPermissions($data['permissions']);
+    public function update($id){
+        $role = parent::update($id , $this->getBasicColumn(['name']));
+        if (!empty($this->data['permissions']) && is_array($this->data['permissions'])) {
+            $role->syncPermissions($this->data['permissions']);
         }
         return $role;
         

@@ -30,5 +30,28 @@ trait StoreMultiLang{
         return $model;
     }
 
+
+
+
+    private function createSlug($data){
+        $slug = [];
+        foreach($data['title'] as $key => $value){          
+            if(!empty($value) && !isset($data['slug'][$key])){
+                $slug[$key] = str_replace(' ', '-', strtolower($value));
+            }else{
+                $slug[$key] = $data['slug'][$key];
+            }
+        }
+
+        return $slug;
+    }
+
+
+    
+
+
+
+    
+
     
 }

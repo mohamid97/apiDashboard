@@ -20,15 +20,6 @@ class AchivementService extends BaseModelService{
         return $data['images'];
         
     }
-    // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'images',
-            'breadcrumb',
-            'number'
-       ]));
-       return $basicData;
-    }
 
 
     public function all($request){
@@ -41,35 +32,33 @@ class AchivementService extends BaseModelService{
         return $details;
     }
 
-    public function store(array $data)
+    public function store()
     {
  
         if(isset($data['images']) &&  is_array($data['images'])){
             $data['images'] = $this->uploadAchievementImages($data);  
         }
 
-        if(isset($data['breadcrumb']) &&  $data['breadcrumb'] != null){
-          $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'], 'uploads/achievements');
-        }
+       $this->uploadSingleImage(['breadcrumb'], 'uploads/achievements');
+
        
-        $ach = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($ach, $data, ['title' ,'des','meta_des' , 'meta_title']);  
+        $ach = parent::store($this->getBasicColumn(['images','breadcrumb','number']));
+        $this->processTranslations($ach, $this->data, ['title' ,'des','meta_des' , 'meta_title']);  
         return $ach;
         
     }
     
 
 
-    public function update($id , array $data){ 
+    public function update($id){ 
         
         if(isset($data['images']) &&  is_array($data['images'])){      
             $data['images'] = $this->uploadAchievementImages($data);  
         }
-        if(isset($data['breadcrumb']) &&  $data['breadcrumb'] != null){
-          $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'], 'uploads/achievements');
-        } 
-        $ach = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($ach, $data, ['title' ,'des','meta_des' , 'meta_title']);
+       $this->uploadSingleImage(['breadcrumb'], 'uploads/achievements');
+
+        $ach = parent::update($id , $this->getBasicColumn(['images','breadcrumb','number']));
+        $this->processTranslations($ach, $this->data, ['title' ,'des','meta_des' , 'meta_title']);
         return $ach;
         
     }

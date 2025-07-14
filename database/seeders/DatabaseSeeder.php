@@ -26,16 +26,18 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Super',
                 'last_name' => 'Admin',
                 'username' => 'superadmin',
-                'password' => Hash::make('123456'), 
+                'password' => Hash::make('123456'),
             ]
+            
         );
 
         Lang::firstOrCreate(['code' => 'ar'], ['lang' => 'Arabic']);
 
         $adminRole = Role::firstOrCreate(['name' => 'admin' , 'guard_name' => 'sanctum']);
-        $managerRole = Role::firstOrCreate(['name' => 'manager']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager' , 'guard_name' => 'sanctum']);
        
-        $models = ['user' ,'service' ,'role' , 'client' , 'event', 'feedback','achivement', 'ourwork','blog' ,'permission' ,'post', 'service' , 'lang' , 'slider' , 'category' , 'about' , 'contact' , 'location' , 'maincontact' , 'social'];
+        
+        $models = ['user' ,'product' ,'service' ,'role' , 'client' , 'event', 'feedback','achivement', 'ourwork','blog' ,'permission' ,'post', 'service' , 'lang' , 'slider' , 'category' , 'about' , 'contact' , 'location' , 'maincontact' , 'social'];
         $actions = ['view', 'create', 'update', 'delete'];
         foreach ($models as $model) {
             foreach ($actions as $action) {
@@ -43,6 +45,7 @@ class DatabaseSeeder extends Seeder
                $adminRole->givePermissionTo($permission);             
             }
         }
+        
 
          $adminUser->assignRole($adminRole);
  

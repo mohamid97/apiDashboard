@@ -3,25 +3,15 @@ namespace App\Services\Category;
 
 use App\Models\Api\Admin\Category;
 use App\Services\BaseModelService;
-use App\Traits\HandlesImage;
 use App\Traits\StoreMultiLang;
 use Illuminate\Database\Eloquent\Builder;
 
 class CategoryService extends BaseModelService
 {
-    use StoreMultiLang , HandlesImage;
+    use StoreMultiLang;
     protected string $modelClass = Category::class;
-   
 
-        // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'image', 
-            'thumbnail', 
-            'order'
-       ]));
-       return $basicData;
-    }
+
 
     public function all($request){
         $allDetails = parent::all($request);
@@ -33,31 +23,21 @@ class CategoryService extends BaseModelService
         return $categoryDetails;
     }
 
-    public function store(array $data)
+    public function store()
     {
-        if(isset($data['image']) && $data['image'] != ''){
-            $data['image'] = $this->uploadImage($data['image'] , 'uploads/category');
-        }
-        if(isset($data['thumbnail']) && $data['thumbnail'] != ''){
-            $data['thumbnail'] = $this->uploadImage($data['thumbnail'] , 'uploads/category');
-        }
-        
-        $category = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($category, $data, ['title', 'slug', 'des' , 'alt_image' , 'title_image' , 'small_des' , 'meta_title' , 'meta_des']);  
+        $this->uploadSingleImage(['image' , 'thumbnail' , 'breadcrumb'], 'uploads/categories'); 
+        $category = parent::store($this->getBasicColumn($this->data , ['image', 'thumbnail', 'breadcrumb' , 'order']));
+        $this->data['slug']  = $this->createSlug($this->data);
+        $this->processTranslations($category, $this->data, ['title', 'slug', 'des' , 'alt_image' , 'title_image' , 'small_des' , 'meta_title' , 'meta_des']);  
         return $category;
         
     }
 
 
-    public function update($id , array $data){
-        if(isset($data['image']) && $data['image'] != ''){
-            $data['image'] = $this->uploadImage($data['image'] , 'uploads/category');
-        }
-        if(isset($data['thumbnail']) && $data['thumbnail'] != ''){
-            $data['thumbnail'] = $this->uploadImage($data['thumbnail'] , 'uploads/category');
-        }
-        $category = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($category, $data, ['title' , 'slug', 'des' , 'alt_image' , 'title_image' , 'small_des' , 'meta_title' , 'meta_des']);
+    public function update($id){
+        $this->uploadSingleImage(['image' , 'thumbnail' , 'breadcrumb'], 'uploads/categories'); 
+        $category = parent::update($id , $this->getBasicColumn( $this->data , ['image', 'thumbnail', 'breadcrumb' , 'order']));
+        $this->processTranslations($category, $this->data, ['title' , 'slug', 'des' , 'alt_image' , 'title_image' , 'small_des' , 'meta_title' , 'meta_des']);
         return $category;
         
     }
@@ -67,12 +47,19 @@ class CategoryService extends BaseModelService
         return $category;
     }
 
+    
     public function applySearch(Builder $query, string $search){
         return $query->where(function ($q) use ($search) {
             $q->whereTranslationLike('title', "%$search%")
               ->orWhereTranslationLike('slug', "%$search%");
         });
     }
+
+    public function orderBy(Builder $query, string $orderBy, string $direction = 'asc')
+    {
+        return $query->orderBy($orderBy, $direction);
+    }
+
 
 
 

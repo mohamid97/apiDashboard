@@ -9,11 +9,11 @@ class LangService extends BaseModelService
 {
     protected string $modelClass = Lang::class;
 
-    public function store(array $data)
+    public function store()
     {
         
-        $data['code'] = strtolower($data['code']);
-        $lang = parent::store($data);
+        $this->data['code'] = strtolower($this->data['code']);
+        $lang = parent::store($this->data);
         return $lang;
     }
     
@@ -23,6 +23,13 @@ class LangService extends BaseModelService
         $data['code'] = strtolower($data['code']);
         return parent::update($id, $data);
     }
+
+    public function all($request){
+        $langs = parent::all($request);
+        return $langs;
+    }
+
+    
 
     
 

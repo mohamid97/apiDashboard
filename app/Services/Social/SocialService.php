@@ -6,10 +6,10 @@ use App\Services\BaseModelService;
 class SocialService extends BaseModelService{
     protected string $modelClass = Soical::class;
 
-    public function store(array $data)
+    public function store()
     {
         Soical::query()->delete(); 
-        return parent::store($data); 
+        return parent::store($this->data); 
     }
     
 }

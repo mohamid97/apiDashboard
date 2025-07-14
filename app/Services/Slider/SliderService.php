@@ -3,26 +3,12 @@ namespace App\Services\Slider;
 
 use App\Models\Api\Admin\Slider;
 use App\Services\BaseModelService;
-use App\Traits\HandlesImage;
 use App\Traits\StoreMultiLang;
 
 class SliderService extends BaseModelService
 {
-    use StoreMultiLang , HandlesImage;
+    use StoreMultiLang;
     protected string $modelClass = Slider::class;
-    
-   
-
-        // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'image', 
-            'link', 
-            'video', 
-            'order'
-       ]));
-       return $basicData;
-    }
 
     public function all($request){
         $allDetails = parent::all($request);
@@ -34,23 +20,21 @@ class SliderService extends BaseModelService
         return $sliderDetails;
     }
 
-    public function store(array $data)
-    {
-         
-        $data['image'] = $this->uploadImage($data['image'] , 'uploads');
-        $slider = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($slider, $data, ['title', 'des' , 'alt_image' , 'title_image' , 'small_des']);  
-        return $slider;
-        
+    public function store()
+    {          
+        $this->uploadSingleImage(['image'] , 'uploads/sliders');
+        $slider = parent::store($this->getBasicColumn($this->data , ['image', 'link', 'video', 'order']));
+        $this->processTranslations($slider, $this->data, ['title', 'des' , 'alt_image' , 'title_image' , 'small_des']);  
+        return $slider;        
     }
 
 
-    public function update($id , array $data){
-        if(isset($data['image']) && $data['image'] != ''){
-            $data['image'] = $this->uploadImage($data['image'] , 'uploads');
+    public function update($id){
+        if(isset($this->data['image']) && $this->data['image'] != ''){
+         $this->uploadSingleImage([$this->data['image']] , 'uploads/sliders');
         }
-        $slider = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($slider, $data, ['title', 'des' , 'alt_image' , 'title_image' , 'small_des']);
+        $slider = parent::update($id , $this->getBasicColumn($this->data , ['image', 'link', 'video', 'order']));
+        $this->processTranslations($slider, $this->data, ['title', 'des' , 'alt_image' , 'title_image' , 'small_des']);
         return $slider;
         
     }

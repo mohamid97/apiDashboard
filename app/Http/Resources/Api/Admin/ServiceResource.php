@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Http\Resources\Api\Admin;
-use App\Traits\HandlesImage;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Traits\HandlesImage;
 
-class EventResource extends JsonResource
+class ServiceResource extends JsonResource
 {
     use HandlesImage;
-
-
-  
     /**
      * Transform the resource into an array.
      *
@@ -18,31 +16,32 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-       
-        $images = [];
-        if($this->images){
-            foreach ($this->images as $image) {
-                
-                $images[] = $this->getImageUrl($image);
-            }  
+ 
+        if(isset($this->images) && is_array($this->images)) {
+            $this->images = array_map(function($image) {
+                return $this->getImageUrl($image);
+            }, $this->images);
         }
 
+        
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'slug' => $this->slug,
+            'price' => $this->price,
+            'category_id' => $this->category_id,
+            'order' => $this->order,
+            'small_des' => $this->small_des,
             'des' => $this->des,
-            'images' => $images,
+            'images' => $this->images,
+            'image' => $this->getImageUrl($this->service_image),
             'breadcrumb' => $this->getImageUrl($this->breadcrumb),
-            'date' => $this->date ? $this->date->format('Y-m-d') : null,
+            'title_image' => $this->title_image,
+            'alt_image' => $this->alt_image,
             'meta_title' => $this->meta_title,
             'meta_des' => $this->meta_des,
-            'alt_image' => $this->alt_image,
-            'title_image' => $this->title_image,
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
     }
-
-
-
 }

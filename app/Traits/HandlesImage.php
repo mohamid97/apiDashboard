@@ -18,6 +18,22 @@ trait HandlesImage{
     }
 
 
+    public function uploadImages(&$data , $directory ='uploads'){
+        
+        $data['images'] = array_map(function($image , $directory) {
+            return $this->uploadImage($image, $directory);
+        }, $data['images']);
+        return $data['images'];
+
+        
+    }
+
+
+
+
+    
+
+
 
 
 

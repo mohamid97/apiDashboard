@@ -10,7 +10,7 @@ class AboutUs extends Model implements TranslatableContract
 {
     use HasFactory , Translatable;
     protected $fillable = ['image' , 'breadcrumb'];
-    public $translatedAttributes = ['title','small_des','mission','vission','breif','services' , 'alt_image' , 'title_image' , 'des' , 'meta_title' , 'meta_des'];
+    public $translatedAttributes = ['title','small_des','mission','vission','brief','services' , 'alt_image' , 'title_image' , 'des' , 'meta_title' , 'meta_des'];
     public $translationForeignKey = 'aboutus_id';
     public $translationModel = 'App\Models\Api\Admin\AboutUsTranslation';
 

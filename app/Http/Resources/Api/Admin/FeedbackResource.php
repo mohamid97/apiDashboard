@@ -17,9 +17,13 @@ class FeedbackResource extends JsonResource
     public function toArray(Request $request): array
     {
         $images = [];
-        foreach ($this->images as $image) {
-            $images[] = $this->getImageUrl($image);
-        }  
+        if($this->images){  
+            foreach ($this->images as $image) {
+                $images[] = $this->getImageUrl($image);
+            }
+
+        }
+  
         return [
             'id' => $this->id,
             'images' => $this->images,

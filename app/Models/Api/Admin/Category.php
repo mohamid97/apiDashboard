@@ -9,7 +9,7 @@ use Astrotomic\Translatable\Translatable;
 class Category extends Model implements TranslatableContract
 {
     use HasFactory , Translatable;
-    protected $fillable = ['image' , 'thumbnail' , 'order' , 'parent_id'];
+    protected $fillable = ['image' , 'thumbnail' , 'order','breadcrumb' , 'parent_id'];
     public $translatedAttributes = ['title' , 'alt_image' , 'title_image' ,'small_des' , 'des' , 'meta_title' , 'meta_des' , 'slug'];
     public $translationForeignKey = 'category_id';
     public $translationModel = 'App\Models\Api\Admin\CategoryTranslation';

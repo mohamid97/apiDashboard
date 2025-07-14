@@ -9,16 +9,26 @@ class UserService extends BaseModelService
 {
     protected string $modelClass = User::class;
 
-    public function store(array $data)
+    public function store()
     {
-        $data['password'] = bcrypt($data['password']);
-        $data['type'] = 'manager';
-        $user = parent::store($data);
-        $role = Role::where(['name' => $data['role']])->first();
+        $this->hassBassword();
+        $user = parent::store($this->data);
+        $this->assingRoleUser($user);
+        return $user;
+    }
+
+    private function hassBassword()
+    {
+        $this->data['password'] = bcrypt($this->data['password']);
+        $this->data['type'] = 'manager';
+    }
+    private function assingRoleUser($user)
+    {
+        $role = Role::where(['name' => $this->data['role']])->first();
         if (isset($role) && $role != null) {    
             $user->assignRole($role);
         }
-        return $user;
+
     }
 
 

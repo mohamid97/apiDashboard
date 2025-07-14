@@ -5,23 +5,21 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\AuthorizationException;
+use App\Traits\HandlesImage;
+
 
 abstract class BaseModelService
 {
+    use HandlesImage;
     protected string $modelClass;
+    protected array $data = [];
 
 
-
-    // protected function authorizeAction(string $action)
-    // {
-    //     $model = strtolower(class_basename($this->modelClass));
-    //     $permission = "$model.$action";
-
-    //     if (!Auth::user()?->can($permission)) {
-    //         throw new AuthorizationException("You do not have permission to $action $model");
-    //     }
-    // }
-
+    public function setData(array $data): self
+    {
+        $this->data = $data;
+        return $this;
+    }
     public function all($request){
 
        $query = $this->modelClass::query();
@@ -41,27 +39,43 @@ abstract class BaseModelService
         return $this->modelClass::find($id);
     }
 
-    public function store(array $data)
+    public function store()
     {
-        // $this->authorizeAction('create');
-        return $this->modelClass::create($data);
+        return $this->modelClass::create($this->data);
     }
 
-    public function update(int $id, array $data)
+    public function update(int $id)
     {
-        // $this->authorizeAction('update');
         $item = $this->modelClass::findOrFail($id);
-        $item->update($data);
+        $item->update($this->data);
         return $item;
     }
 
     public function delete(int $id)
     {
-        // $this->authorizeAction('delete');
         $item = $this->modelClass::findOrFail($id);
         $item->delete();
         return true;
     }
+
+    protected function getBasicColumn($mainData){
+        $basicData = array_intersect_key($this->data, array_flip($mainData));
+       return $basicData;
+    }
+
+    
+    
+    protected function uploadSingleImage($single_image, $directory = 'uploads'){
+      
+        foreach ($single_image as $field) {
+            if (!empty($this->data[$field])) {
+                $this->data[$field] = $this->uploadImage($this->data[$field], $directory);
+               
+            }
+        }
+    }
+
+    
     
 
     

@@ -22,14 +22,7 @@ class FeedbackService extends BaseModelService{
         return $data['images'];
         
     }
-    // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'images',
-            'breadcrumb'
-       ]));
-       return $basicData;
-    }
+
 
 
     public function all($request){
@@ -42,35 +35,29 @@ class FeedbackService extends BaseModelService{
         return $details;
     }
 
-    public function store(array $data)
+    public function store()
     {
  
         if(isset($data['images']) &&  is_array($data['images'])){
-            $data['images'] = $this->uploadFeedbackImages($data);  
+            $data['images'] = $this->uploadFeedbackImages($this->data);  
         }
-
-        if(isset($data['breadcrumb']) &&  $data['breadcrumb'] != null){
-          $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'], 'uploads/feedbacks');
-        }
-       
-        $feed = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($feed, $data, ['title', 'small_des' ,'des','meta_des' , 'meta_title']);  
+        $this->uploadSingleImage(['breadcrumb'], 'uploads/feedbacks');  
+        $feed = parent::store($this->getBasicColumn(['images','breadcrumb']));
+        $this->processTranslations($feed, $this->data, ['title', 'small_des' ,'des','meta_des' , 'meta_title']);  
         return $feed;
         
     }
     
 
 
-    public function update($id , array $data){ 
+    public function update($id){ 
         
         if(isset($data['images']) &&  is_array($data['images'])){      
             $data['images'] = $this->uploadFeedbackImages($data);  
         }
-        if(isset($data['breadcrumb']) &&  $data['breadcrumb'] != null){
-          $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'], 'uploads/feedbacks');
-        } 
-        $feed = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($feed, $data, ['title', 'small_des' ,'des','meta_des' , 'meta_title']);
+        $this->uploadSingleImage(['breadcrumb'], 'uploads/feedbacks');  
+        $feed = parent::update($id , $this->getBasicColumn(['images','breadcrumb']));
+        $this->processTranslations($feed, $this->data, ['title', 'small_des' ,'des','meta_des' , 'meta_title']);
         return $feed;
         
     }

@@ -1,17 +1,24 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\Service;
+namespace App\Http\Requests\Api\Admin\Product;
 
+
+use App\Traits\ResponseTrait;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ServiceUpdateRequest extends FormRequest
+
+
+class ProductUpdateRequest extends FormRequest
 {
+    use ResponseTrait;
     /**
      * Determine if the user is authorized to make this request.
-     */
+     */             
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +29,7 @@ class ServiceUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'id'=>'required|exists:products,id',
             'price'=>'nullable|numeric',
             'category_id'=>'nullable|exists:categories,id',
             'order'=>'nullable|integer|unique:service,order',
@@ -38,7 +45,21 @@ class ServiceUpdateRequest extends FormRequest
             'des.*'=>'nullable|max:5000',
             'meta_title.*' => 'nullable|max:255',
             'meta_des.*' => 'nullable|max:255',
-            
         ];
     }
+
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            $this->error(
+                $validator->errors()->first(), 
+                422, 
+                
+            )
+        );
+    }
+
+
+    
 }

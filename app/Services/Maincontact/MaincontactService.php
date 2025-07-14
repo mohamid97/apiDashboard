@@ -7,11 +7,11 @@ class MaincontactService extends BaseModelService
 {
     protected string $modelClass = BasicContact::class;
 
-    public function store(array $data)
+    public function store()
     {
 
         BasicContact::query()->delete();
-        return parent::store($data);
+        return parent::store($this->data);
         
     }
 

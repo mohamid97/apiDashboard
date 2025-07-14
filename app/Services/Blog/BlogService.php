@@ -12,26 +12,6 @@ class BlogService extends BaseModelService{
     protected string $modelClass = Blog::class;
 
 
-            // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'image', 'breadcrumb', 'is_active', 'category_id'
-       ]));
-       return $basicData;
-    }
-
-    private function createSlug($data){
-        $slug = [];
-        foreach($data['title'] as $key => $value){          
-            if(!empty($value) && !isset($data['slug'][$key])){
-                $slug[$key] = str_replace(' ', '-', strtolower($value));
-            }else{
-                $slug[$key] = $data['slug'][$key];
-            }
-        }
-
-        return $slug;
-    }
 
 
     public function all($request){
@@ -44,34 +24,23 @@ class BlogService extends BaseModelService{
         return $blogDetails;
     }
 
-    public function store(array $data)
+    public function store()
     {
   
-
-        if(isset($data['image'])){  
-            $data['image'] = $this->uploadImage($data['image'] , 'uploads/blog');
-        }
-        if(isset($data['breadcrumb'])){  
-            $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'] ,'uploads/blog');
-        } 
-        $data['slug']  = $this->createSlug($data);
-        $blog = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($blog, $data, ['title', 'slug' ,'des' , 'small_des' , 'meta_title' , 'meta_des', 'alt_image' , 'title_image']);  
+        $this->uploadSingleImage(['image' , 'breadcrumb'] , 'uploads/blog');
+        $this->data['slug']  = $this->createSlug($this->data);
+        $blog = parent::store($this->getBasicColumn(['breadcrumb' , 'image','category_id','is_active']));
+        $this->processTranslations($blog, $this->data, ['title', 'slug' ,'des' , 'small_des' , 'meta_title' , 'meta_des', 'alt_image' , 'title_image']);  
         return $blog;
         
     }
     
 
 
-    public function update($id , array $data){
-        if(isset($data['image'])){  
-            $data['image'] = $this->uploadImage($data['image'] , 'uploads/blog');
-        }
-        if(isset($data['breadcrumb'])){  
-            $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'] ,'uploads/blog');
-        }
-        $blog = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($blog, $data, ['title', 'slug' ,'des' , 'small_des' , 'meta_title' , 'meta_des', 'alt_image' , 'title_image']);
+    public function update($id ){
+        $this->uploadSingleImage(['image' , 'breadcrumb'] , 'uploads/blog');
+        $blog = parent::update($id , $this->getBasicColumn(['breadcrumb' , 'image','category_id','is_active']));
+        $this->processTranslations($blog, $this->data, ['title', 'slug' ,'des' , 'small_des' , 'meta_title' , 'meta_des', 'alt_image' , 'title_image']);
         return $blog;
         
     }

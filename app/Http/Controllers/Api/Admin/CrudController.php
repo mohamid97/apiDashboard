@@ -79,10 +79,11 @@ class CrudController extends Controller
        
         ModelRequestFactory::validate($request->model, 'store', $request);
       
+      
         try{
             $service = ModelServiceFactory::make($request->model);
             DB::beginTransaction();
-            $this->data = $service->store($request->except('model'));
+            $this->data = $service->setData($request->except('model'))->store();
             DB::commit();
             return  $this->getResourceClass($request->model);
         }catch(\Exception $e){
@@ -100,9 +101,11 @@ class CrudController extends Controller
     {
         ModelRequestFactory::validate($request->model, 'update', $request);
         try{
+            
             $service = ModelServiceFactory::make($request->model);
             DB::beginTransaction();
-            $this->data  = $service->update($request->id, $request->except(['model', 'id']));
+    
+            $this->data  = $service->setData($request->except(['model', 'id']))->update($request->id);
             DB::commit();
           
             return  $this->getResourceClass($request->model);

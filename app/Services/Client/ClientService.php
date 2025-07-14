@@ -10,17 +10,6 @@ class ClientService extends BaseModelService{
 
     use StoreMultiLang , HandlesImage;
     protected string $modelClass = Client::class;
-
-
-            // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'image'
-       ]));
-       return $basicData;
-    }
-
-
     public function all($request){
         $clients = parent::all($request);
         return $clients;
@@ -31,27 +20,20 @@ class ClientService extends BaseModelService{
         return $details;
     }
 
-    public function store(array $data)
+    public function store()
     {
 
-        if(isset($data['image']) &&  $data['image'] != null){
-          $data['image'] = $this->uploadImage($data['image'], 'uploads/clients');
-        }
-       
-        $client = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($client, $data, ['title', 'des','alt_image' , 'title_image']);  
+        $this->uploadSingleImage(['image','breadcrumb'], 'uploads/clients');
+        $client = parent::store($this->getBasicColumn(['image' , 'breadcrumb']));
+        $this->processTranslations($client, $this->data, ['title', 'des','alt_image' , 'title_image']);  
         return $client;
         
     }
     
-
-
-    public function update($id , array $data){
-        if(isset($data['image']) &&  $data['image'] != null){
-          $data['image'] = $this->uploadImage($data['image'], 'uploads/clients');
-        }
-        $client = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($client, $data, ['title', 'des' , 'alt_image' , 'title_image']);
+    public function update($id){
+        $this->uploadSingleImage(['image','breadcrumb'], 'uploads/clients');
+        $client = parent::update($id , $this->getBasicColumn(['image' , 'breadcrumb']));
+        $this->processTranslations($client, $this->data, ['title', 'des' , 'alt_image' , 'title_image']);
         return $client;
         
     }
@@ -62,7 +44,6 @@ class ClientService extends BaseModelService{
         $event = parent::delete($id);
         return $client;
     }
-
 
     public function applySearch($query, $search)
     {

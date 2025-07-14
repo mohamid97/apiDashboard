@@ -11,24 +11,14 @@ class LocationService extends BaseModelService
 {
     use StoreMultiLang;
     protected string $modelClass = Location::class;
-    
-   
-
-        // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'location', 
-
-       ]));
-       return $basicData;
-    }
 
 
-    public function store(array $data)
+
+    public function store()
     {     
-        $location = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($location, $data, ['address']);   
-        $location =  $this->storeRelations($data, ['phones' , 'emails'], $location);
+        $location = parent::store($this->getBasicColumn(['location']));
+        $this->processTranslations($location, $this->data, ['address']);   
+        $location =  $this->storeRelations($this->data, ['phones' , 'emails'], $location);
         return $location;
         
     }
@@ -36,11 +26,11 @@ class LocationService extends BaseModelService
     
 
 
-    public function update($id , array $data){    
+    public function update($id){    
         
-        $location = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($location, $data, ['address']);
-        $location =  $this->storeRelations($data, ['phones' , 'emails'], $location);
+        $location = parent::update($id , $this->getBasicColumn('location'));
+        $this->processTranslations($location, $this->data, ['address']);
+        $location =  $this->storeRelations($this->data, ['phones' , 'emails'], $location);
         return $location;
         
     }

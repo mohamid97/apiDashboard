@@ -21,15 +21,7 @@ class OurworkService extends BaseModelService{
 
         
     }
-            // get basic column that has no translation 
-    private function getBasicColumn($data){
-        $basicData = array_intersect_key($data, array_flip([
-            'images',
-            'link',
-            'breadcrumb'
-       ]));
-       return $basicData;
-    }
+
 
 
     public function all($request){
@@ -42,35 +34,32 @@ class OurworkService extends BaseModelService{
         return $details;
     }
 
-    public function store(array $data)
+    public function store()
     {
 
     
         if(isset($data['images']) &&  is_array($data['images'])){
             $data['images'] = $this->uploadOurworkImages($data);  
         }
+        $this->uploadSingleImage(['breadcrumb'], 'uploads/ourworks');
 
-        if(isset($data['breadcrumb']) &&  $data['breadcrumb'] != null){
-          $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'], 'uploads/ourworks');
-        }
        
-        $ourwork = parent::store($this->getBasicColumn($data));
-        $this->processTranslations($ourwork, $data, ['title', 'des','meta_des' , 'meta_title']);  
+        $ourwork = parent::store($this->getBasicColumn(['images','link','breadcrumb']));
+        $this->processTranslations($ourwork, $this->data, ['title', 'des','meta_des' , 'meta_title']);  
         return $ourwork;
         
     }
     
 
 
-    public function update($id , array $data){
+    public function update($id){
         if(isset($data['images']) &&   is_array($data['image'])){
             $data['images'] = $this->uploadOurworkImages($data);       
         }
-        if(isset($data['breadcrumb']) &&  $data['breadcrumb'] != null){
-          $data['breadcrumb'] = $this->uploadImage($data['breadcrumb'], 'uploads/ourworks');
-        }
-        $ourwork = parent::update($id , $this->getBasicColumn($data));
-        $this->processTranslations($ourwork, $data, ['title', 'des','meta_des' , 'meta_title']);
+        $this->uploadSingleImage(['breadcrumb'], 'uploads/ourworks');
+
+        $ourwork = parent::update($id , $this->getBasicColumn(['images','link','breadcrumb']));
+        $this->processTranslations($ourwork, $this->data, ['title', 'des','meta_des' , 'meta_title']);
         return $ourwork;
         
     }

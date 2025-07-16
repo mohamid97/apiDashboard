@@ -16,12 +16,12 @@ class ClientResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'    => $this->id,
+            'id' => $this->id,
             'image' => $this->getImageUrl($this->image),
-            'title' => $this->title,
-            'des'   => $this->des,
-            'alt_image' => $this->alt_image,
-            'title_image' => $this->title_image,
+            'title' => $this->getColumnLang('title'),
+            'des' => $this->getColumnLang('des'),
+            'alt_image' => $this->getColumnLang('alt_image'),
+            'title_image' => $this->getColumnLang('title_image'),
             'created_at' => $this->created_at->format('Y-m-d '),
             'updated_at' => $this->updated_at->format('Y-m-d '),
         ];

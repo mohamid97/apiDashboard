@@ -17,22 +17,21 @@ class AboutResource extends JsonResource
     {
         return [
 
-            'title'=>$this->title,
-            'small_des'=>$this->small_des,
-            'mission'=>$this->mission,
-            'vission'=>$this->vission,
-            'breif'=>$this->breif,
-            'services'=>$this->services,
-            'des'=>$this->des,
-            'image'=>$this->getImageUrl($this->image),
-            'title_image'=>$this->title_image,
-            'alt_image'=>$this->alt_image,
-            'breadcrumb'=>$this->getImageUrl($this->breadcrumb),
-            'meta_des'=>$this->meta_des,
-            'meta_title'=>$this->meta_title,
-            'created_at' =>  $this->created_at->format('Y-m-d'),
-            'updated_at' =>  $this->updated_at->format('Y-m-d'),
-            
+            'title' => $this->getColumnLang('title'),
+            'small_des' => $this->getColumnLang('small_des'),
+            'mission' => $this->getColumnLang('mission'),
+            'vission' => $this->getColumnLang('vission'),
+            'breif' => $this->getColumnLang('breif'),
+            'services' => $this->getColumnLang('services'),
+            'des' => $this->getColumnLang('des'),
+            'image' => $this->getImageUrl($this->image),
+            'title_image' => $this->getColumnLang('title_image'),
+            'alt_image' => $this->getColumnLang('alt_image'),
+            'breadcrumb' => $this->getImageUrl($this->breadcrumb),
+            'meta_des' => $this->getColumnLang('meta_des'),
+            'meta_title' => $this->getColumnLang('meta_title'),
+            'created_at' => $this->created_at->format('Y-m-d'),
+            'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
         
     }

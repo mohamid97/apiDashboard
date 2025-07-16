@@ -23,7 +23,7 @@ class SliderService extends BaseModelService
     public function store()
     {          
         $this->uploadSingleImage(['image'] , 'uploads/sliders');
-        $slider = parent::store($this->getBasicColumn($this->data , ['image', 'link', 'video', 'order']));
+        $slider = parent::store($this->getBasicColumn(['image', 'link', 'video', 'order']));
         $this->processTranslations($slider, $this->data, ['title', 'des' , 'alt_image' , 'title_image' , 'small_des']);  
         return $slider;        
     }
@@ -33,7 +33,7 @@ class SliderService extends BaseModelService
         if(isset($this->data['image']) && $this->data['image'] != ''){
          $this->uploadSingleImage([$this->data['image']] , 'uploads/sliders');
         }
-        $slider = parent::update($id , $this->getBasicColumn($this->data , ['image', 'link', 'video', 'order']));
+        $slider = parent::update($id , $this->getBasicColumn( ['image', 'link', 'video', 'order']));
         $this->processTranslations($slider, $this->data, ['title', 'des' , 'alt_image' , 'title_image' , 'small_des']);
         return $slider;
         

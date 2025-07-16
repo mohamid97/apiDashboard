@@ -26,7 +26,7 @@ class CategoryService extends BaseModelService
     public function store()
     {
         $this->uploadSingleImage(['image' , 'thumbnail' , 'breadcrumb'], 'uploads/categories'); 
-        $category = parent::store($this->getBasicColumn($this->data , ['image', 'thumbnail', 'breadcrumb' , 'order']));
+        $category = parent::store($this->getBasicColumn(['image', 'thumbnail', 'breadcrumb' , 'order']));
         $this->data['slug']  = $this->createSlug($this->data);
         $this->processTranslations($category, $this->data, ['title', 'slug', 'des' , 'alt_image' , 'title_image' , 'small_des' , 'meta_title' , 'meta_des']);  
         return $category;
@@ -36,7 +36,7 @@ class CategoryService extends BaseModelService
 
     public function update($id){
         $this->uploadSingleImage(['image' , 'thumbnail' , 'breadcrumb'], 'uploads/categories'); 
-        $category = parent::update($id , $this->getBasicColumn( $this->data , ['image', 'thumbnail', 'breadcrumb' , 'order']));
+        $category = parent::update($id , $this->getBasicColumn( ['image', 'thumbnail', 'breadcrumb' , 'order']));
         $this->processTranslations($category, $this->data, ['title' , 'slug', 'des' , 'alt_image' , 'title_image' , 'small_des' , 'meta_title' , 'meta_des']);
         return $category;
         

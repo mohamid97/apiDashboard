@@ -18,10 +18,10 @@ class LangService extends BaseModelService
     }
     
 
-    public function update(int $id, array $data)
+    public function update(int $id)
     {
-        $data['code'] = strtolower($data['code']);
-        return parent::update($id, $data);
+        $this->data['code'] = strtolower($this->data['code']);
+        return parent::update($id, $this->data);
     }
 
     public function all($request){

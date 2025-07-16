@@ -20,19 +20,19 @@ class ContactResource extends JsonResource
     {
         
         return [
-            'title'=>$this->title,
-            'des'=>$this->des,
-            'image'=>$this->getImageUrl($this->image),
-            'title_image'=>$this->title_image,
-            'alt_image'=>$this->alt_image,
-            'meta_title'=>$this->meta_title,
-            'meta_des'=>$this->meta_des,
+            'title' => $this->getColumnLang('title'),
+            'des' => $this->getColumnLang('des'),
+            'image' => $this->getImageUrl($this->image),
+            'title_image' => $this->getColumnLang('title_image'),
+            'alt_image' => $this->getColumnLang('alt_image'),
+            'meta_title' => $this->getColumnLang('meta_title'),
+            'meta_des' => $this->getColumnLang('meta_des'),
             'locations' => LocationResource::collection(Location::with(['phones', 'emails'])->get()),
             'main_contact' => MaincontactResource::collection(BasicContact::all()),
-            'created_at' =>  $this->created_at->format('Y-m-d'),
-            'updated_at' =>  $this->updated_at->format('Y-m-d'),
+            'created_at' => $this->created_at->format('Y-m-d'),
+            'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
-        
+                
     }
     
 }

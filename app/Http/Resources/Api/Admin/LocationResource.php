@@ -17,7 +17,7 @@ class LocationResource extends JsonResource
         return [
             'id'=>$this->id,
             'location' => $this->location,
-            'address' => $this->address,
+            'address' => $this->getColumnLang('address'),
             'phones' => $this->phones->pluck('phone')->toArray(),
             'emails' => $this->emails->pluck('email')->toArray(),
             'created_at' => $this->created_at?->format('Y-m-d'),

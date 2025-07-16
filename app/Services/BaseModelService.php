@@ -60,7 +60,7 @@ abstract class BaseModelService
 
     protected function getBasicColumn($mainData){
         $basicData = array_intersect_key($this->data, array_flip($mainData));
-       return $basicData;
+        return $basicData;
     }
 
     

@@ -26,21 +26,22 @@ class EventResource extends JsonResource
                 $images[] = $this->getImageUrl($image);
             }  
         }
-
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'des' => $this->des,
+            'title' => $this->getColumnLang('title'),
+            'des' => $this->getColumnLang('des'),
             'images' => $images,
             'breadcrumb' => $this->getImageUrl($this->breadcrumb),
             'date' => $this->date ? $this->date->format('Y-m-d') : null,
-            'meta_title' => $this->meta_title,
-            'meta_des' => $this->meta_des,
-            'alt_image' => $this->alt_image,
-            'title_image' => $this->title_image,
+            'meta_title' => $this->getColumnLang('meta_title'),
+            'meta_des' => $this->getColumnLang('meta_des'),
+            'alt_image' => $this->getColumnLang('alt_image'),
+            'title_image' => $this->getColumnLang('title_image'),
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
+
+        
     }
 
 

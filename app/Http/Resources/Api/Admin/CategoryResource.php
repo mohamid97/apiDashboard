@@ -18,20 +18,19 @@ class CategoryResource extends JsonResource
         
         
         return [
-            'id'=>$this->id,
-            'slug'=>$this->slug,
-            'title'=>$this->title,
-            'des'=>$this->des,
-            'meta_title'=>$this->meta_title,
-            'meta_des'=>$this->meta_des,
-            'image'=>$this->getImageUrl($this->image),
-            'title_image'=>$this->title_image,
-            'alt_image'=>$this->alt_image,
-            'thumbnail'=>$this->getImageUrl($this->thumbnail),
-            'order'=>$this->order,
-            'created_at' =>  $this->created_at->format('Y-m-d'),
-            'updated_at' =>  $this->updated_at->format('Y-m-d'),
-          
+            'id' => $this->id,
+            'slug' => $this->slug,
+            'title' => $this->getColumnLang('title'),
+            'des' => $this->getColumnLang('des'),
+            'meta_title' => $this->getColumnLang('meta_title'),
+            'meta_des' => $this->getColumnLang('meta_des'),
+            'image' => $this->getImageUrl($this->image),
+            'title_image' => $this->getColumnLang('title_image'),
+            'alt_image' => $this->getColumnLang('alt_image'),
+            'thumbnail' => $this->getImageUrl($this->thumbnail),
+            'order' => $this->order,
+            'created_at' => $this->created_at->format('Y-m-d'),
+            'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
 
     }

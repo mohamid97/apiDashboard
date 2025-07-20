@@ -14,6 +14,8 @@ use App\Http\Requests\Api\Admin\Client\ClientStoreRequest;
 use App\Http\Requests\Api\Admin\Client\ClientUpdateRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactStoreRequest;
 use App\Http\Requests\Api\Admin\Contact\ContactUpdateRequest;
+use App\Http\Requests\Api\Admin\Coupon\CouponStoreRequest;
+use App\Http\Requests\Api\Admin\Coupon\CouponUpdateRequest;
 use App\Http\Requests\Api\Admin\Event\EventStoreRequest;
 use App\Http\Requests\Api\Admin\Event\EventUpdateRequest;
 use App\Http\Requests\Api\Admin\Feedback\FeedbackStoreRequest;
@@ -23,6 +25,8 @@ use App\Http\Requests\Api\Admin\Location\LocationUpdateRequest;
 use App\Http\Requests\Api\Admin\LangStoreRequest;
 use App\Http\Requests\Api\Admin\Ourwork\OurworkStoreRequest;
 use App\Http\Requests\Api\Admin\Ourwork\OurworkUpdateRequest;
+use App\Http\Requests\Api\Admin\Product\ProductStoreRequest;
+use App\Http\Requests\Api\Admin\Product\ProductUpdateRequest;
 use App\Http\Requests\Api\Admin\Role\RoleStoreRequest;
 use App\Http\Requests\Api\Admin\Role\RoleUpdateRequest;
 use App\Http\Requests\Api\Admin\Service\ServiceStoreRequest;
@@ -106,7 +110,15 @@ class ModelRequestFactory
             'service'=>[
                 'store'=>ServiceStoreRequest::class,
                 'update'=>ServiceUpdateRequest::class
-            ]
+            ],
+            'coupon'=>[
+                'store'=>CouponStoreRequest::class,
+                'update'=>CouponUpdateRequest::class,
+            ],
+            'product'=>[
+                'store'=>ProductStoreRequest::class,
+                'update'=>ProductUpdateRequest::class
+            ],
             
 
         ];

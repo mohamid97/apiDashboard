@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Admin\Product;
+namespace App\Http\Requests\Api\Admin\Coupon;
 
 use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ProductStoreRequest extends FormRequest
+class CouponStoreRequest extends FormRequest
 {
     use ResponseTrait;
     /**
@@ -26,21 +26,19 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price'=>'nullable|numeric',
-            'category_id'=>'nullable|exists:categories,id',
-            'order'=>'nullable|integer|unique:service,order',
-            'images'=>'nullable|array',
-            'images.*'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
-            'breadcrumb'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
-            'product_image'=>'nullable|image|mimes:jpeg,png,webp,jpg,gif|max:5000',
-            'title' => 'required|array|min:1',
-            'title.*'=>'required|max:255',
-            'small_des' => 'nullable|max:255',
+            'name' => 'required|array|min:1',
+            'name.*'=>'required|max:255',
             'des.*'=>'nullable|max:5000',
-            'meta_title.*' => 'nullable|max:255',
-            'meta_des.*' => 'nullable|max:255',
-            'type'              => 'nullable|in:fixed,percentage',
-            'value'             => 'nullable|numeric|min:0',
+            'code'=>'required|unique:coupons,code',
+            'usage_limit'       => 'nullable|integer|min:1',
+            'is_active'         => 'boolean',
+            'start_date'        => 'required|date',
+            'end_date'          => 'required|date|after_or_equal:start_date',
+            'min_order_amount'  => 'nullable|numeric|min:1',
+            'type'              => 'required|in:fixed,percentage',
+            'value'             => 'required|numeric|min:0',
+
+
         ];
     }
 
@@ -55,11 +53,6 @@ class ProductStoreRequest extends FormRequest
             )
         );
     }
-
-    
-
-
-    
 
     
 }

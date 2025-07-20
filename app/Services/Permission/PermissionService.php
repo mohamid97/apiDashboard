@@ -10,6 +10,7 @@ class PermissionService extends BaseModelService
 
     public function all($request){
         $permissions = parent::all($request);
+        return $permissions;
         return $this->groupPermissionsByModel($permissions);
     }
 

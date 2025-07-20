@@ -15,14 +15,23 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
+
+        $parentData= null;
+        if ( $this->parent) {
+            $parentData = [
+                'id' => $this->parent->id,
+                'name' => $this->parent->title,
+                'slug' => $this->parent->slug
+            ];
+        }
         
         return [
             'id' => $this->id,
-            'slug' => $this->slug,
+            'slug' => $this->getColumnLang('slug'),
             'title' => $this->getColumnLang('title'),
             'des' => $this->getColumnLang('des'),
             'meta_title' => $this->getColumnLang('meta_title'),
+            'parent' => $parentData, // Will be null if no parent exists
             'meta_des' => $this->getColumnLang('meta_des'),
             'image' => $this->getImageUrl($this->image),
             'title_image' => $this->getColumnLang('title_image'),

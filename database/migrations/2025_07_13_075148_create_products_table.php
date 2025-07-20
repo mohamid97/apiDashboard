@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('breadcrumb')->nullable();
             $table->float('price', 8, 2)->default(0.00);
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->enum('type', ['fixed', 'percentage'])->nullable();
+            $table->decimal('value', 8, 2)->default(0); 
+            $table->tinyInteger('order')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
-            $table->tinyInteger('order')->default(0);
             $table->timestamps();
         });
     }

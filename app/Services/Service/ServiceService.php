@@ -25,7 +25,7 @@ class ServiceService extends BaseModelService{
     public function store()
     {
         $this->uploadSingleImage(['service_image', 'breadcrumb'], 'uploads/services');
-        if(isset($data['images']) && is_array($data['images'])) {  
+        if(isset($this->data['images']) && is_array($this->data['images'])) {  
             $this->data['images'] = $this->uploadImages($this->data,'uploads/services');
         }
         $this->data['slug']  = $this->createSlug($this->data);
@@ -39,8 +39,8 @@ class ServiceService extends BaseModelService{
 
     public function update($id){
         $this->uploadSingleImage(['service_image', 'breadcrumb'], 'uploads/services');
-        if(isset($data['images']) && is_array($data['images'])) {  
-            $data['images'] = $this->uploadImages($data,'uploads/services');
+        if(isset($this->data['images']) && is_array($this->data['images'])) {  
+            $data['images'] = $this->uploadImages($this->data,'uploads/services');
         }
         $blog = parent::update($id , $this->getBasicColumn(['images', 'service_image', 'breadcrumb', 'price','category_id','order']));
         $this->processTranslations($blog, $this->data, ['title', 'slug' ,'des' , 'small_des' , 'meta_title' , 'meta_des', 'alt_image' , 'title_image']);

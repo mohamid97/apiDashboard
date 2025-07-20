@@ -23,8 +23,8 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'type' => $this->type,
             'image' => $this->image ? asset($this->image) : null,
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
-            'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
+            'roles' => RoleResource::collection($this->roles),
+            'permissions' => PermissionResource::collection($this->getAllPermissions()),
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->updated_at->format('Y-m-d'),
         ];

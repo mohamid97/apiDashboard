@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources\Api\Admin;
 
+use App\Traits\HandlesImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
+    use HandlesImage;
     /**
      * Transform the resource into an array.
      *
@@ -20,12 +22,19 @@ class ProductResource extends JsonResource
             }, $this->images);
         }
 
-
+        $category = null;
+        if ( $this->category) {
+            $category = [
+                'id' => $this->category->id,
+                'name' => $this->category->title,
+                'slug' => $this->category->slug
+            ];
+        }
       
     return [      
         'id' => $this->id,
         'title' => $this->getColumnLang('title'),
-        'slug' => $this->slug,
+        'slug' => $this->getColumnLang('slug'),
         'price' => $this->price,
         'category_id' => $this->category_id,
         'order' => $this->order,
@@ -38,8 +47,13 @@ class ProductResource extends JsonResource
         'alt_image' => $this->getColumnLang('alt_image'),
         'meta_title' => $this->getColumnLang('meta_title'),
         'meta_des' => $this->getColumnLang('meta_des'),
+        'discount_type'     => $this->type,
+        'value'=>$this->value,
+        'order'=>$this->order,
+        'category'=>$category,
         'created_at' => $this->created_at->format('Y-m-d'),
         'updated_at' => $this->updated_at->format('Y-m-d'),
+    
     ];
 
         

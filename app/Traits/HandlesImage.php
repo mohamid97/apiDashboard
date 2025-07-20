@@ -18,22 +18,15 @@ trait HandlesImage{
     }
 
 
-    public function uploadImages(&$data , $directory ='uploads'){
-        
-        $data['images'] = array_map(function($image , $directory) {
-            return $this->uploadImage($image, $directory);
+    public function uploadImages($data , $directory ='uploads'){
+  
+        $data['images'] = array_map(function($image) use($directory) {   
+            return $this->uploadImage($image, $directory , 'public');
         }, $data['images']);
         return $data['images'];
 
         
     }
-
-
-
-
-    
-
-
 
 
 
@@ -59,7 +52,7 @@ trait HandlesImage{
         if (!$path) {
             return null;
         }
-     
+    
         return Storage::disk($disk)->url($path);
     }
 

@@ -19,5 +19,9 @@ class Category extends Model implements TranslatableContract
     {
       return $date->format('Y-m-d'); 
     }
+
+    public function parent(){
+      return $this->belongsTo(Category::class , 'parent_id');
+    }
     
 }

@@ -24,6 +24,8 @@ class ModelServiceFactory
         'feedback'=> \App\Services\Feedback\FeedbackService::class,
         'achivement'=>\App\Services\Achivement\AchivementService::class,
         'service'=>\App\Services\Service\ServiceService::class,
+        'coupon'=>\App\Services\Coupon\CouponService::class,
+        'product'=>\App\Services\Product\ProductService::class
     ];
 
     public static function make(string $modelName)

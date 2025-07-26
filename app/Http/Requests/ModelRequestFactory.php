@@ -8,6 +8,8 @@ use App\Http\Requests\Api\Admin\Achivement\AchivementStoreRequest;
 use App\Http\Requests\Api\Admin\Achivement\AchivementUpdateRequest;
 use App\Http\Requests\Api\Admin\Blog\BlogStoreRequest;
 use App\Http\Requests\Api\Admin\Blog\BlogUpdateRequest;
+use App\Http\Requests\Api\Admin\Branch\BranchStoreRequest;
+use App\Http\Requests\Api\Admin\Branch\BranchUpdateRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryStoreRequest;
 use App\Http\Requests\Api\Admin\Category\CategoryUpdateRequest;
 use App\Http\Requests\Api\Admin\Client\ClientStoreRequest;
@@ -119,6 +121,10 @@ class ModelRequestFactory
                 'store'=>ProductStoreRequest::class,
                 'update'=>ProductUpdateRequest::class
             ],
+            'branch'=>[
+                'store'  =>  BranchStoreRequest::class,
+                'update' => BranchUpdateRequest::class
+            ]
             
 
         ];
